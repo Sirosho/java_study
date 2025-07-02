@@ -9,6 +9,7 @@ public class Player extends Object // 상속을 안적으면 이렇게 자동으
     int hp;
     int exp;
 
+
     public Player(String nickName, int hp) {
         System.out.println("플레이어의 생성자 호출!");
         this.nickName = nickName;
@@ -29,4 +30,9 @@ public class Player extends Object // 상속을 안적으면 이렇게 자동으
         System.out.printf("%s님이 공격합니다.",this.nickName);
     }
 
+    void death() {
+        if (this.hp <= 0) {
+            System.out.printf("%s님이 사망했습니다.", this.nickName);
+        }
+    }
 }

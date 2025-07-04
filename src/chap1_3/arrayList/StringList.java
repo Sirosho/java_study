@@ -7,12 +7,11 @@ public class StringList {
 
 
     // 필드
-    String[] values;
+   private String[] values;
 
     // 생성자
-    StringList(){
-        values = new String[0];
-    }
+   public StringList(){ values = new String[0]; }
+    public StringList(String...items){ values = items; }
 
     // 메서드
     boolean isOutOfBounds(int index) {
@@ -20,12 +19,12 @@ public class StringList {
         return index < 0 || index >= values.length;
     }
 
-    void modify(int index, String item) {
+    public void modify(int index, String item) {
         if (isOutOfBounds(index)) return;
         values[index] = item;
     }
 
-    void insert(int index, String item) {
+    public void insert(int index, String item) {
         if (isOutOfBounds(index)) return;
         String[] temp = copy(1);
         for (int i = values.length; i > index; i--) {
@@ -35,7 +34,7 @@ public class StringList {
         values = temp;
     }
 
-    String pop() {
+    public String pop() {
         if (values.length == 0) {
             System.out.println("제거할 대상이 없습니다.");
             return null;
@@ -46,7 +45,7 @@ public class StringList {
         return deleted;
     }
 
-    int indexOf(String item) {
+    public int indexOf(String item) {
         for (int i = 0; i < values.length; i++) {
             if (values[i].equals(item)) {
                 return i;
@@ -55,7 +54,7 @@ public class StringList {
         return -1;
     }
 
-    void printFoods() {
+    public void printFoods() {
         System.out.println(Arrays.toString(values));
     }
 
@@ -71,7 +70,7 @@ public class StringList {
         return tempArray;
     }
 
-    void push(String... items) {
+    public void push(String... items) {
         // 1. 사이즈가 1개 더 큰 배열을 생성
         // 2. 원본 내용을 복사
         String[] temp = copy(items.length);
@@ -85,7 +84,7 @@ public class StringList {
     }
 
     // 배열 저장값으로 찾아서 삭제
-    void remove(String targetItem) {
+    public void remove(String targetItem) {
 
         if (!include(targetItem)) return;
 
@@ -96,12 +95,19 @@ public class StringList {
     }
 
     // 오버로딩 : 같은이름의 메서드를 계속만드는 행위
-    void remove(int targetIndex) {
+    public void remove(int targetIndex) {
         if (isOutOfBounds(targetIndex)) return;
         remove(values[targetIndex]);
     }
 
-    boolean include(String item) {
+    public boolean include(String item) {
         return indexOf(item) != -1;
+    }
+
+    @Override
+    public String toString() {
+        return "StringList{" +
+                "values=" + Arrays.toString(values) +
+                '}';
     }
 }

@@ -12,6 +12,7 @@ public class ArtistController {
     }
 
     public void start() {
+        repository.load();
 
 
         while (true) {
@@ -42,6 +43,8 @@ public class ArtistController {
                     System.out.println("# 프로그램을 종료합니까? [y/n]");
                     String exit = prompt(">> ");
                     if (exit.equalsIgnoreCase("y")) {
+                        // 파일을 저장
+                        repository.save();
                         System.exit(0);
                     } else {
                         System.out.println("# 종료를 취소합니다.");
@@ -54,7 +57,6 @@ public class ArtistController {
             System.out.println("==== 계속하시려면 Enter... ====");
             prompt("");
         }
-
     } // end start()
 
     private void showAllArtist() {
@@ -108,17 +110,17 @@ public class ArtistController {
 
         String name = prompt("\n # 검색할 가수명을 입력하세요! - ");
 
-        if(repository.isRegistered(name)){
-         // 노래목록 좀
-           Set<String> trackList =  repository.getTrackList(name);
+        if (repository.isRegistered(name)) {
+            // 노래목록 좀
+            Set<String> trackList = repository.getTrackList(name);
             System.out.printf("\n %s 님의 노래목록 \n", name);
             System.out.println("=========================");
-           for (String songName : trackList) {
-               System.out.printf("# %s\n",songName);
+            for (String songName : trackList) {
+                System.out.printf("# %s\n", songName);
             }
 
 
-        }else{
+        } else {
             System.out.println("\n 해당 가수는 존재하지 않습니다.");
         }
 

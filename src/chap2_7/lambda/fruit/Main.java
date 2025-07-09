@@ -1,10 +1,12 @@
 package chap2_7.lambda.fruit;
 
 import java.util.List;
+import java.util.Map;
 
 import static chap2_7.lambda.fruit.Color.*;
-import static chap2_7.lambda.fruit.Color.GREEN;
 import static chap2_7.lambda.fruit.FilterApple.*;
+import static chap2_7.lambda.fruit.MappingApple.map;
+import static chap2_7.lambda.fruit.MappingApple.mappingApples;
 
 public class Main {
 
@@ -22,23 +24,10 @@ public class Main {
                 , new Apple(75, YELLOW)
         );
 
-        List<Integer> mappedList = map(appleBasket, new GenericMapping<Apple, Integer>() {
-            @Override
-            public Integer map(Apple apple) {
-                return apple.getWeight();
-            }
-        });
-        System.out.println("==========================");
-        System.out.println(mappedList);
-        System.out.println("==========================");
-
-
 
 //        List<String> filteredFoods = filter(List.of("짜장면", "우동", "탕수육"), str -> str.length() == 3);
 
-        
-        
-        
+
         List<Apple> greenApples = filterGreenApples(appleBasket);
         System.out.println(greenApples);
 
@@ -88,14 +77,13 @@ public class Main {
         System.out.println("==========================");
 
 
-
-        List<Integer> numbers = List.of(1,2,3,4,5,6,7);
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7);
         // 짝수만 필터링
 
         List<Integer> evenNumbers = filter(numbers, n -> n % 2 == 0);
         System.out.println(evenNumbers);
 
-        List<Apple> yellowAppleList = filter(appleBasket,a -> a.getColor() == YELLOW);
+        List<Apple> yellowAppleList = filter(appleBasket, a -> a.getColor() == YELLOW);
         System.out.println(yellowAppleList);
 
         List<String> filteredFoods = filter(List.of("짜장면", "우동", "탕수육"), new GenericPredicate<String>() {
@@ -105,6 +93,48 @@ public class Main {
             }
         });
         System.out.println(filteredFoods);
+
+
+//        MappingApple.mappingApples(appleBasket, new AppleFunction<Character>() {
+//
+//
+//            @Override
+//            public Character apply(Apple apple) {
+//                return apple.getColor().toString().charAt(0);
+//            }
+//        });
+
+
+        /*
+        *
+        *   사과목록에서 아래와 같은 데이터 형식의 목록을 리턴
+        *
+        *   [
+        *       {
+        *           first: 'G'
+        *           weight: 0.08
+        *        }
+        *   ]
+        *
+        *
+        * */
+        List<Map<String, Object>> mapList = mappingApples(appleBasket, new AppleFunction<Map<String, Object>>() {
+            public Map<String, Object> apply(Apple apple) {
+                return Map.of(
+                        "first", apple.getColor().toString().charAt(0),
+                        "weight", apple.getWeight() / 1000.0
+                );
+            }
+        });
+
+        List<String> foodMapList = map(
+                List.of("닭강정", "통닭", "닭백숙", "오리백숙", "김치찌개")
+                , str -> str + " 맛있어!"
+        );
+        System.out.println("foodMapList = " + foodMapList);
+
+
+
 
     }
 }

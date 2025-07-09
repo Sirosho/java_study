@@ -79,16 +79,7 @@ public class FilterApple {
         return filteredList;
     }
 
-    public static <T,R> List<R> map(List<T> list, GenericMapping<T,R> mapping){
 
-        List<R> mappedList = new ArrayList<>();
-        for (T t : list) {
-            mappedList.add(mapping.map(t));
-        }
-
-
-        return mappedList;
-    }
 
 
 }
